@@ -1,5 +1,5 @@
-import 'package:bakkal_dukkani/pages/authentication/screens/login_screen.dart';
-import 'package:bakkal_dukkani/pages/authentication/screens/sign_up_screen.dart';
+import 'package:bakkal_dukkani/views/authentication/screens/login_screen.dart';
+import 'package:bakkal_dukkani/views/authentication/screens/sign_up_screen.dart';
 
 import '/common/widgets/app_button.dart';
 import '/constants/global_variables.dart';

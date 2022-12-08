@@ -1,40 +1,50 @@
-import 'package:bakkal_dukkani/common/widgets/app_textfield.dart';
-import 'package:bakkal_dukkani/pages/authentication/screens/reset_password_screen.dart';
-import 'package:bakkal_dukkani/pages/authentication/screens/sign_up_screen.dart';
+import 'package:bakkal_dukkani/views/authentication/screens/sign_up_screen.dart';
+import 'package:bakkal_dukkani/views/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
-
-import '../../../common/widgets/app_button.dart';
+import '../../../common/widgets/app_textfield.dart';
 import '../../../constants/global_variables.dart';
+import 'forgot_password_screen.dart';
+import '../../../common/widgets/app_button.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
-  const ForgotPasswordScreen({Key? key}) : super(key: key);
-  static const String routeName = 'forgot-password-screen';
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+  static const String routeName = 'login-screen';
 
   @override
-  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _emailController;
+  late TextEditingController _passwordController;
+
+  bool _isCheckPassword = false;
 
   @override
   void initState() {
     super.initState();
     _emailController = TextEditingController();
+    _passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
     _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
-  void navigateToResetPassword() {
-    Navigator.pushReplacementNamed(context, ResetPasswordScreen.routeName);
+  void navigateToForgotPasswordScreen() {
+    Navigator.pushNamed(context, ForgotPasswordScreen.routeName);
   }
 
   void navigateToSignUpScreen() {
-    Navigator.popAndPushNamed(context, SignUpScreen.routeName);
+    Navigator.pushReplacementNamed(context, SignUpScreen.routeName);
+  }
+
+  void navigateToHomeScreen() {
+    Navigator.pushNamedAndRemoveUntil(
+        context, HomeScreen.routeName, (route) => false);
   }
 
   @override
@@ -122,15 +132,70 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               const SizedBox(
                 height: 13,
               ),
+              AppTextField(
+                controller: _emailController,
+                labelText: 'Parola*',
+                iconUrl: 'assets/icons/email.png',
+              ),
+              const SizedBox(
+                height: 13,
+              ),
               AppButton(
-                onTap: navigateToResetPassword,
-                imageUrl: 'assets/icons/paper-plane.png',
-                text: 'Link Gönder',
+                onTap: navigateToHomeScreen,
+                imageUrl: 'assets/icons/key.png',
+                text: 'Giriş Yap',
                 textStyle: GlobalVariables.mediumBoldTextStyle.copyWith(
                   color: Colors.white,
                 ),
                 color: GlobalVariables.primaryColor,
                 borderColor: GlobalVariables.primaryColor,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 15,
+                        height: 15,
+                        child: Checkbox(
+                          side: const BorderSide(
+                              color: GlobalVariables.secondaryColor),
+                          value: _isCheckPassword,
+                          onChanged: (value) {
+                            setState(() {
+                              _isCheckPassword = value!;
+                            });
+                          },
+                          activeColor: GlobalVariables.primaryColor,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const Text(
+                        'Parolayı Hatırla',
+                        style: GlobalVariables.mediumTextStyle,
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 50,
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: navigateToForgotPasswordScreen,
+                      child: Text(
+                        'Parolanızı mı unuttunuz?',
+                        overflow: TextOverflow.ellipsis,
+                        style: GlobalVariables.mediumTextStyle
+                            .copyWith(decoration: TextDecoration.underline),
+                      ),
+                    ),
+                  )
+                ],
               ),
               const SizedBox(
                 height: 22,

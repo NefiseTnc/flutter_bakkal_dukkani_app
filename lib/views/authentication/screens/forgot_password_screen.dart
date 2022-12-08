@@ -1,41 +1,40 @@
 import 'package:bakkal_dukkani/common/widgets/app_textfield.dart';
-import 'package:bakkal_dukkani/pages/authentication/screens/login_screen.dart';
+import 'package:bakkal_dukkani/views/authentication/screens/reset_password_screen.dart';
+import 'package:bakkal_dukkani/views/authentication/screens/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/widgets/app_button.dart';
 import '../../../constants/global_variables.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
-  static const String routeName = 'sign-up-screen';
+class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({Key? key}) : super(key: key);
+  static const String routeName = 'forgot-password-screen';
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  late TextEditingController _userName;
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   late TextEditingController _emailController;
-  late TextEditingController _passwordController;
 
   @override
   void initState() {
     super.initState();
-    _userName = TextEditingController();
     _emailController = TextEditingController();
-    _passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _userName.dispose();
     _emailController.dispose();
-    _passwordController.dispose();
     super.dispose();
   }
 
-  void navigateToLoginScreen() {
-    Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+  void navigateToResetPassword() {
+    Navigator.pushReplacementNamed(context, ResetPasswordScreen.routeName);
+  }
+
+  void navigateToSignUpScreen() {
+    Navigator.popAndPushNamed(context, SignUpScreen.routeName);
   }
 
   @override
@@ -79,7 +78,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
             right: 0,
             left: 0,
             child: Column(
-              children: [_content(size), _bottomContent()],
+              children: [
+                _content(size),
+                const SizedBox(
+                  height: 15,
+                ),
+                _bottomContent()
+              ],
             ),
           ),
         ],
@@ -110,14 +115,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: 35,
               ),
               AppTextField(
-                controller: _userName,
-                labelText: 'Ad Soyad',
-                iconUrl: 'assets/icons/email.png',
-              ),
-              const SizedBox(
-                height: 13,
-              ),
-              AppTextField(
                 controller: _emailController,
                 labelText: 'Email*',
                 iconUrl: 'assets/icons/email.png',
@@ -125,49 +122,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(
                 height: 13,
               ),
-              AppTextField(
-                controller: _emailController,
-                labelText: 'Parola*',
-                iconUrl: 'assets/icons/email.png',
-              ),
-              const SizedBox(
-                height: 13,
-              ),
               AppButton(
-                onTap: navigateToLoginScreen,
-                imageUrl: 'assets/icons/user-plus.png',
-                text: 'Kayıt ol',
+                onTap: navigateToResetPassword,
+                imageUrl: 'assets/icons/paper-plane.png',
+                text: 'Link Gönder',
                 textStyle: GlobalVariables.mediumBoldTextStyle.copyWith(
                   color: Colors.white,
                 ),
                 color: GlobalVariables.primaryColor,
                 borderColor: GlobalVariables.primaryColor,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Expanded(
-                    child: Text(
-                      'Zaten hesabınız var mı?',
-                      overflow: TextOverflow.ellipsis,
-                      style: GlobalVariables.mediumTextStyle,
-                    ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: navigateToLoginScreen,
-                      child: Text(
-                        'Giriş Yap',
-                        style: GlobalVariables.mediumBoldTextStyle.copyWith(
-                          color: GlobalVariables.primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
               ),
               const SizedBox(
                 height: 22,
@@ -180,23 +143,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget _bottomContent() {
-    return Column(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
-          'veya',
+          'Henüz bir hesabınız yok mu?',
           style: GlobalVariables.mediumTextStyle,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/icons/google.png'),
-            Image.asset('assets/icons/facebook.png'),
-            const Text(
-              'ile kayıt olun.',
-              style: GlobalVariables.mediumTextStyle,
+        const SizedBox(
+          width: 10,
+        ),
+        GestureDetector(
+          onTap: navigateToSignUpScreen,
+          child: Text(
+            'Kayıt Ol',
+            style: GlobalVariables.mediumBoldTextStyle.copyWith(
+              color: GlobalVariables.primaryColor,
             ),
-          ],
+          ),
         ),
       ],
     );

@@ -1,7 +1,7 @@
 import '/router/router.dart';
 import 'package:flutter/material.dart';
 import 'constants/global_variables.dart';
-import 'pages/authentication/screens/welcome_screen.dart';
+import 'views/authentication/screens/welcome_screen.dart';
 
 void main() {
   runApp(const MyApp());

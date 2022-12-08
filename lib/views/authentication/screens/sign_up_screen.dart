@@ -1,38 +1,41 @@
 import 'package:bakkal_dukkani/common/widgets/app_textfield.dart';
-import 'package:bakkal_dukkani/pages/authentication/screens/sign_up_screen.dart';
+import 'package:bakkal_dukkani/views/authentication/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/widgets/app_button.dart';
 import '../../../constants/global_variables.dart';
 
-class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({Key? key}) : super(key: key);
-  static const String routeName = 'reset-password-screen';
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
+  static const String routeName = 'sign-up-screen';
 
   @override
-  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-  late TextEditingController _password;
-  late TextEditingController _passwordAgain;
+class _SignUpScreenState extends State<SignUpScreen> {
+  late TextEditingController _userName;
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
 
   @override
   void initState() {
     super.initState();
-    _password = TextEditingController();
-    _passwordAgain = TextEditingController();
+    _userName = TextEditingController();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _password.dispose();
-    _passwordAgain.dispose();
+    _userName.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
-  void navigateToSignUpScreen() {
-    Navigator.popAndPushNamed(context, SignUpScreen.routeName);
+  void navigateToLoginScreen() {
+    Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
   }
 
   @override
@@ -76,13 +79,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             right: 0,
             left: 0,
             child: Column(
-              children: [
-                _content(size),
-                const SizedBox(
-                  height: 15,
-                ),
-                _bottomContent()
-              ],
+              children: [_content(size), _bottomContent()],
             ),
           ),
         ],
@@ -113,30 +110,64 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 height: 35,
               ),
               AppTextField(
-                controller: _password,
-                labelText: 'Yeni Parola*',
-                iconUrl: 'assets/icons/lock.png',
+                controller: _userName,
+                labelText: 'Ad Soyad',
+                iconUrl: 'assets/icons/email.png',
               ),
               const SizedBox(
                 height: 13,
               ),
               AppTextField(
-                controller: _passwordAgain,
-                labelText: 'Parolanızı tekrar yazınız*',
-                iconUrl: 'assets/icons/lock.png',
+                controller: _emailController,
+                labelText: 'Email*',
+                iconUrl: 'assets/icons/email.png',
+              ),
+              const SizedBox(
+                height: 13,
+              ),
+              AppTextField(
+                controller: _emailController,
+                labelText: 'Parola*',
+                iconUrl: 'assets/icons/email.png',
               ),
               const SizedBox(
                 height: 13,
               ),
               AppButton(
-                onTap: () {},
-                imageUrl: 'assets/icons/sender.png',
-                text: 'Gönder',
+                onTap: navigateToLoginScreen,
+                imageUrl: 'assets/icons/user-plus.png',
+                text: 'Kayıt ol',
                 textStyle: GlobalVariables.mediumBoldTextStyle.copyWith(
                   color: Colors.white,
                 ),
                 color: GlobalVariables.primaryColor,
                 borderColor: GlobalVariables.primaryColor,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Expanded(
+                    child: Text(
+                      'Zaten hesabınız var mı?',
+                      overflow: TextOverflow.ellipsis,
+                      style: GlobalVariables.mediumTextStyle,
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: navigateToLoginScreen,
+                      child: Text(
+                        'Giriş Yap',
+                        style: GlobalVariables.mediumBoldTextStyle.copyWith(
+                          color: GlobalVariables.primaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 22,
@@ -149,24 +180,23 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   }
 
   Widget _bottomContent() {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
-          'Henüz bir hesabınız yok mu?',
+          'veya',
           style: GlobalVariables.mediumTextStyle,
         ),
-        const SizedBox(
-          width: 10,
-        ),
-        GestureDetector(
-          onTap: navigateToSignUpScreen,
-          child: Text(
-            'Kayıt Ol',
-            style: GlobalVariables.mediumBoldTextStyle.copyWith(
-              color: GlobalVariables.primaryColor,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/icons/google.png'),
+            Image.asset('assets/icons/facebook.png'),
+            const Text(
+              'ile kayıt olun.',
+              style: GlobalVariables.mediumTextStyle,
             ),
-          ),
+          ],
         ),
       ],
     );
