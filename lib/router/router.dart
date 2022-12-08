@@ -2,6 +2,7 @@ import 'package:bakkal_dukkani/pages/authentication/screens/forgot_password_scre
 import 'package:bakkal_dukkani/pages/authentication/screens/login_screen.dart';
 import 'package:bakkal_dukkani/pages/authentication/screens/reset_password_screen.dart';
 import 'package:bakkal_dukkani/pages/authentication/screens/sign_up_screen.dart';
+import 'package:bakkal_dukkani/pages/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import '../common/screens/not_found_page_screen.dart';
 import '../pages/authentication/screens/welcome_screen.dart';
@@ -33,6 +34,11 @@ class AppRouter {
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (context) => const ResetPasswordScreen(),
+        );
+      case HomeScreen.routeName:
+        return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (context) => const HomeScreen(),
         );
       default:
         return MaterialPageRoute(

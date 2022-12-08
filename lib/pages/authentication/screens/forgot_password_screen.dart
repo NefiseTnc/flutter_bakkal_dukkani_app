@@ -1,5 +1,6 @@
 import 'package:bakkal_dukkani/common/widgets/app_textfield.dart';
 import 'package:bakkal_dukkani/pages/authentication/screens/reset_password_screen.dart';
+import 'package:bakkal_dukkani/pages/authentication/screens/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/widgets/app_button.dart';
@@ -29,7 +30,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 
   void navigateToResetPassword() {
-    Navigator.pushNamed(context, ResetPasswordScreen.routeName);
+    Navigator.pushReplacementNamed(context, ResetPasswordScreen.routeName);
+  }
+
+  void navigateToSignUpScreen() {
+    Navigator.popAndPushNamed(context, SignUpScreen.routeName);
   }
 
   @override
@@ -148,10 +153,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         const SizedBox(
           width: 10,
         ),
-        Text(
-          'Kayıt Ol',
-          style: GlobalVariables.mediumBoldTextStyle.copyWith(
-            color: GlobalVariables.primaryColor,
+        GestureDetector(
+          onTap: navigateToSignUpScreen,
+          child: Text(
+            'Kayıt Ol',
+            style: GlobalVariables.mediumBoldTextStyle.copyWith(
+              color: GlobalVariables.primaryColor,
+            ),
           ),
         ),
       ],

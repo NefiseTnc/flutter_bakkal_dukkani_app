@@ -1,4 +1,5 @@
 import 'package:bakkal_dukkani/common/widgets/app_textfield.dart';
+import 'package:bakkal_dukkani/pages/authentication/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/widgets/app_button.dart';
@@ -31,6 +32,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void navigateToLoginScreen() {
+    Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
   }
 
   @override
@@ -129,7 +134,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: 13,
               ),
               AppButton(
-                onTap: () {},
+                onTap: navigateToLoginScreen,
                 imageUrl: 'assets/icons/user-plus.png',
                 text: 'Kayıt ol',
                 textStyle: GlobalVariables.mediumBoldTextStyle.copyWith(
@@ -151,13 +156,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       style: GlobalVariables.mediumTextStyle,
                     ),
                   ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'Giriş Yap',
-                    style: GlobalVariables.mediumBoldTextStyle.copyWith(
-                      color: GlobalVariables.primaryColor,
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: navigateToLoginScreen,
+                      child: Text(
+                        'Giriş Yap',
+                        style: GlobalVariables.mediumBoldTextStyle.copyWith(
+                          color: GlobalVariables.primaryColor,
+                        ),
+                      ),
                     ),
                   ),
                 ],

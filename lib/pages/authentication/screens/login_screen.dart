@@ -1,3 +1,6 @@
+import 'package:bakkal_dukkani/pages/authentication/screens/sign_up_screen.dart';
+import 'package:bakkal_dukkani/pages/authentication/screens/welcome_screen.dart';
+import 'package:bakkal_dukkani/pages/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../common/widgets/app_textfield.dart';
 import '../../../constants/global_variables.dart';
@@ -16,6 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
 
+  bool _isCheckPassword = false;
+
   @override
   void initState() {
     super.initState();
@@ -32,6 +37,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void navigateToForgotPasswordScreen() {
     Navigator.pushNamed(context, ForgotPasswordScreen.routeName);
+  }
+
+  void navigateToSignUpScreen() {
+    Navigator.pushReplacementNamed(context, SignUpScreen.routeName);
+  }
+
+  void navigateToHomeScreen() {
+    Navigator.pushNamedAndRemoveUntil(
+        context, HomeScreen.routeName, (route) => false);
   }
 
   @override
@@ -128,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 13,
               ),
               AppButton(
-                onTap: () {},
+                onTap: navigateToHomeScreen,
                 imageUrl: 'assets/icons/key.png',
                 text: 'Giriş Yap',
                 textStyle: GlobalVariables.mediumBoldTextStyle.copyWith(
@@ -145,13 +159,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     children: [
                       SizedBox(
-                        width: 5,
-                        height: 5,
+                        width: 15,
+                        height: 15,
                         child: Checkbox(
                           side: const BorderSide(
                               color: GlobalVariables.secondaryColor),
-                          value: false,
-                          onChanged: (value) {},
+                          value: _isCheckPassword,
+                          onChanged: (value) {
+                            setState(() {
+                              _isCheckPassword = value!;
+                            });
+                          },
                           activeColor: GlobalVariables.primaryColor,
                         ),
                       ),
@@ -170,10 +188,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: navigateToForgotPasswordScreen,
-                      child: const Text(
+                      child: Text(
                         'Parolanızı mı unuttunuz?',
                         overflow: TextOverflow.ellipsis,
-                        style: GlobalVariables.mediumTextStyle,
+                        style: GlobalVariables.mediumTextStyle
+                            .copyWith(decoration: TextDecoration.underline),
                       ),
                     ),
                   )
@@ -200,10 +219,13 @@ class _LoginScreenState extends State<LoginScreen> {
         const SizedBox(
           width: 10,
         ),
-        Text(
-          'Kayıt Ol',
-          style: GlobalVariables.mediumBoldTextStyle.copyWith(
-            color: GlobalVariables.primaryColor,
+        GestureDetector(
+          onTap: navigateToSignUpScreen,
+          child: Text(
+            'Kayıt Ol',
+            style: GlobalVariables.mediumBoldTextStyle.copyWith(
+              color: GlobalVariables.primaryColor,
+            ),
           ),
         ),
       ],
