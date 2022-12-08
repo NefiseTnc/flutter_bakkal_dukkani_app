@@ -1,3 +1,4 @@
+import 'package:bakkal_dukkani/constants/utils.dart';
 import 'package:bakkal_dukkani/views/authentication/screens/sign_up_screen.dart';
 import 'package:bakkal_dukkani/views/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
 
@@ -118,89 +120,111 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 35,
-              ),
-              AppTextField(
-                controller: _emailController,
-                labelText: 'Email*',
-                iconUrl: 'assets/icons/email.png',
-              ),
-              const SizedBox(
-                height: 13,
-              ),
-              AppTextField(
-                controller: _emailController,
-                labelText: 'Parola*',
-                iconUrl: 'assets/icons/email.png',
-              ),
-              const SizedBox(
-                height: 13,
-              ),
-              AppButton(
-                onTap: navigateToHomeScreen,
-                imageUrl: 'assets/icons/key.png',
-                text: 'Giriş Yap',
-                textStyle: GlobalVariables.mediumBoldTextStyle.copyWith(
-                  color: Colors.white,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 35,
                 ),
-                color: GlobalVariables.primaryColor,
-                borderColor: GlobalVariables.primaryColor,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 15,
-                        height: 15,
-                        child: Checkbox(
-                          side: const BorderSide(
-                              color: GlobalVariables.secondaryColor),
-                          value: _isCheckPassword,
-                          onChanged: (value) {
-                            setState(() {
-                              _isCheckPassword = value!;
-                            });
-                          },
-                          activeColor: GlobalVariables.primaryColor,
+                AppTextField(
+                  controller: _emailController,
+                  labelText: 'Email*',
+                  iconUrl: 'assets/icons/email.png',
+                  validator: (value) {
+                    if (!(value!.contains('@')) && value.isEmpty) {
+                      return 'Geçerli bir e-posta adresi girin!';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 13,
+                ),
+                AppTextField(
+                  controller: _passwordController,
+                  labelText: 'Parola*',
+                  iconUrl: 'assets/icons/email.png',
+                  validator: (value) {
+                    if (!(value!.length > 5) && value.isEmpty) {
+                      return 'Parola 5\'ten fazla karakter içermelidir!';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 13,
+                ),
+                AppButton(
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      _emailController.clear();
+                      _passwordController.clear();
+                      showSnackbar(context: context, message: 'giriş başarılı');
+                      navigateToHomeScreen();
+                    }
+                  },
+                  imageUrl: 'assets/icons/key.png',
+                  text: 'Giriş Yap',
+                  textStyle: GlobalVariables.mediumBoldTextStyle.copyWith(
+                    color: Colors.white,
+                  ),
+                  color: GlobalVariables.primaryColor,
+                  borderColor: GlobalVariables.primaryColor,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 15,
+                          height: 15,
+                          child: Checkbox(
+                            side: const BorderSide(
+                                color: GlobalVariables.secondaryColor),
+                            value: _isCheckPassword,
+                            onChanged: (value) {
+                              setState(() {
+                                _isCheckPassword = value!;
+                              });
+                            },
+                            activeColor: GlobalVariables.primaryColor,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Text(
+                          'Parolayı Hatırla',
+                          style: GlobalVariables.mediumTextStyle,
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 50,
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: navigateToForgotPasswordScreen,
+                        child: Text(
+                          'Parolanızı mı unuttunuz?',
+                          overflow: TextOverflow.ellipsis,
+                          style: GlobalVariables.mediumTextStyle
+                              .copyWith(decoration: TextDecoration.underline),
                         ),
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        'Parolayı Hatırla',
-                        style: GlobalVariables.mediumTextStyle,
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: navigateToForgotPasswordScreen,
-                      child: Text(
-                        'Parolanızı mı unuttunuz?',
-                        overflow: TextOverflow.ellipsis,
-                        style: GlobalVariables.mediumTextStyle
-                            .copyWith(decoration: TextDecoration.underline),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 22,
-              ),
-            ],
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 22,
+                ),
+              ],
+            ),
           ),
         ),
       ),

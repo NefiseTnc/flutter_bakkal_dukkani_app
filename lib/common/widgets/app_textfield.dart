@@ -6,11 +6,13 @@ class AppTextField extends StatelessWidget {
   final TextEditingController controller;
   final String iconUrl;
   final String labelText;
+  final String? Function(String?)? validator;
   const AppTextField({
     Key? key,
     required this.controller,
     required this.iconUrl,
     required this.labelText,
+    this.validator
   }) : super(key: key);
 
   @override
@@ -19,8 +21,9 @@ class AppTextField extends StatelessWidget {
     return SizedBox(
       height: 37,
       width: size.width,
-      child: TextField(
+      child: TextFormField(
         controller: controller,
+        validator: validator,
         cursorColor: GlobalVariables.secondaryColor,
         style: GlobalVariables.mediumTextStyle,
         decoration: InputDecoration(

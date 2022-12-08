@@ -1,3 +1,5 @@
+import 'package:bakkal_dukkani/views/authentication/screens/reset_password_screen.dart';
+
 import '/router/router.dart';
 import 'package:flutter/material.dart';
 import 'constants/global_variables.dart';
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: GlobalVariables.backgroundColor,
       ),
-      home: const WelcomeScreen(),
+      home: const ResetPasswordScreen(),
       onGenerateRoute: ((settings) => AppRouter.onGenerateRoute(settings)),
     );
   }

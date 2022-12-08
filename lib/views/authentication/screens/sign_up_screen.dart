@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../common/widgets/app_button.dart';
 import '../../../constants/global_variables.dart';
+import '../../../constants/utils.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -14,21 +15,22 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  late TextEditingController _userName;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late TextEditingController _userNameController;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
 
   @override
   void initState() {
     super.initState();
-    _userName = TextEditingController();
+    _userNameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _userName.dispose();
+    _userNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -103,76 +105,105 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 35,
-              ),
-              AppTextField(
-                controller: _userName,
-                labelText: 'Ad Soyad',
-                iconUrl: 'assets/icons/email.png',
-              ),
-              const SizedBox(
-                height: 13,
-              ),
-              AppTextField(
-                controller: _emailController,
-                labelText: 'Email*',
-                iconUrl: 'assets/icons/email.png',
-              ),
-              const SizedBox(
-                height: 13,
-              ),
-              AppTextField(
-                controller: _emailController,
-                labelText: 'Parola*',
-                iconUrl: 'assets/icons/email.png',
-              ),
-              const SizedBox(
-                height: 13,
-              ),
-              AppButton(
-                onTap: navigateToLoginScreen,
-                imageUrl: 'assets/icons/user-plus.png',
-                text: 'Kayıt ol',
-                textStyle: GlobalVariables.mediumBoldTextStyle.copyWith(
-                  color: Colors.white,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 35,
                 ),
-                color: GlobalVariables.primaryColor,
-                borderColor: GlobalVariables.primaryColor,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Expanded(
-                    child: Text(
-                      'Zaten hesabınız var mı?',
-                      overflow: TextOverflow.ellipsis,
-                      style: GlobalVariables.mediumTextStyle,
-                    ),
+                AppTextField(
+                  controller: _userNameController,
+                  labelText: 'Ad Soyad',
+                  iconUrl: 'assets/icons/email.png',
+                  validator: (value) {
+                    if (!(value!.length > 9) && value.isEmpty) {
+                      return 'Ad Soyad 9\'ten fazla karakter içermelidir!';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 13,
+                ),
+                AppTextField(
+                  controller: _emailController,
+                  labelText: 'Email*',
+                  iconUrl: 'assets/icons/email.png',
+                  validator: (value) {
+                    if (!(value!.contains('@')) && value.isEmpty) {
+                      return 'Geçerli bir e-posta adresi girin!';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 13,
+                ),
+                AppTextField(
+                  controller: _passwordController,
+                  labelText: 'Parola*',
+                  iconUrl: 'assets/icons/email.png',
+                  validator: (value) {
+                    if (!(value!.length > 5) && value.isEmpty) {
+                      return 'Parola 5\'ten fazla karakter içermelidir!';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 13,
+                ),
+                AppButton(
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      _userNameController.clear();
+                      _emailController.clear();
+                      _passwordController.clear();
+                      showSnackbar(context: context, message: 'kayıt başarılı');
+                      navigateToLoginScreen();
+                    }
+                  },
+                  imageUrl: 'assets/icons/user-plus.png',
+                  text: 'Kayıt ol',
+                  textStyle: GlobalVariables.mediumBoldTextStyle.copyWith(
+                    color: Colors.white,
                   ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: navigateToLoginScreen,
+                  color: GlobalVariables.primaryColor,
+                  borderColor: GlobalVariables.primaryColor,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Expanded(
                       child: Text(
-                        'Giriş Yap',
-                        style: GlobalVariables.mediumBoldTextStyle.copyWith(
-                          color: GlobalVariables.primaryColor,
+                        'Zaten hesabınız var mı?',
+                        overflow: TextOverflow.ellipsis,
+                        style: GlobalVariables.mediumTextStyle,
+                      ),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: navigateToLoginScreen,
+                        child: Text(
+                          'Giriş Yap',
+                          style: GlobalVariables.mediumBoldTextStyle.copyWith(
+                            color: GlobalVariables.primaryColor,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 22,
-              ),
-            ],
+                  ],
+                ),
+                const SizedBox(
+                  height: 22,
+                ),
+              ],
+            ),
           ),
         ),
       ),

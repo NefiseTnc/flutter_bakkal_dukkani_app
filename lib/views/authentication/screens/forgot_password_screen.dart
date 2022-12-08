@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../common/widgets/app_button.dart';
 import '../../../constants/global_variables.dart';
+import '../../../constants/utils.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   late TextEditingController _emailController;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -108,34 +110,47 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 35,
-              ),
-              AppTextField(
-                controller: _emailController,
-                labelText: 'Email*',
-                iconUrl: 'assets/icons/email.png',
-              ),
-              const SizedBox(
-                height: 13,
-              ),
-              AppButton(
-                onTap: navigateToResetPassword,
-                imageUrl: 'assets/icons/paper-plane.png',
-                text: 'Link Gönder',
-                textStyle: GlobalVariables.mediumBoldTextStyle.copyWith(
-                  color: Colors.white,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 35,
                 ),
-                color: GlobalVariables.primaryColor,
-                borderColor: GlobalVariables.primaryColor,
-              ),
-              const SizedBox(
-                height: 22,
-              ),
-            ],
+                AppTextField(
+                  controller: _emailController,
+                  labelText: 'Email*',
+                  iconUrl: 'assets/icons/email.png',
+                  validator: (value) {
+                    if (!(value!.contains('@')) && value.isEmpty) {
+                      return 'Geçerli bir e-posta adresi girin!';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 13,
+                ),
+                AppButton(
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      navigateToResetPassword();
+                    }
+                  },
+                  imageUrl: 'assets/icons/paper-plane.png',
+                  text: 'Link Gönder',
+                  textStyle: GlobalVariables.mediumBoldTextStyle.copyWith(
+                    color: Colors.white,
+                  ),
+                  color: GlobalVariables.primaryColor,
+                  borderColor: GlobalVariables.primaryColor,
+                ),
+                const SizedBox(
+                  height: 22,
+                ),
+              ],
+            ),
           ),
         ),
       ),
