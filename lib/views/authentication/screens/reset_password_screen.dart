@@ -39,8 +39,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   }
 
   void navigateToLoginScreen() {
-    Navigator.popAndPushNamed(
-        context, LoginScreen.routeName,);
+    Navigator.pushNamedAndRemoveUntil(context, LoginScreen.routeName, (route) => false);
   }
 
   @override

@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: GlobalVariables.backgroundColor,
       ),
-      home: const ResetPasswordScreen(),
+      home: const WelcomeScreen(),
       onGenerateRoute: ((settings) => AppRouter.onGenerateRoute(settings)),
     );
   }
