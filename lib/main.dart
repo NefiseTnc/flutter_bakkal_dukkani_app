@@ -1,11 +1,14 @@
-import 'package:bakkal_dukkani/views/authentication/screens/reset_password_screen.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 import '/router/router.dart';
 import 'package:flutter/material.dart';
 import 'constants/global_variables.dart';
+import 'firebase_options.dart';
 import 'views/authentication/screens/welcome_screen.dart';
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const MyApp());
 }
 

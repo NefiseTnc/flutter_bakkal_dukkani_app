@@ -13,7 +13,7 @@ class LoginScreen extends StatefulWidget {
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
-}
+} 
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -43,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void navigateToSignUpScreen() {
     Navigator.pushReplacementNamed(context, SignUpScreen.routeName);
   }
+
 
   void navigateToHomeScreen() {
     Navigator.pushNamedAndRemoveUntil(

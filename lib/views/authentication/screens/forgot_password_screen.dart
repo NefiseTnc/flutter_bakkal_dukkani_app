@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../../../common/widgets/app_button.dart';
 import '../../../constants/global_variables.dart';
-import '../../../constants/utils.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
