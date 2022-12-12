@@ -1,10 +1,10 @@
 import 'package:bakkal_dukkani/common/widgets/app_textfield.dart';
 import 'package:bakkal_dukkani/views/authentication/screens/login_screen.dart';
+import 'package:bakkal_dukkani/views/authentication/services/i_auth_service.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../../../common/widgets/app_button.dart';
 import '../../../constants/global_variables.dart';
-import '../../../constants/utils.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -38,6 +38,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void navigateToLoginScreen() {
     Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+  }
+
+  void signUpUser() async {
+    IAuthService authService =
+        Provider.of<IAuthService>(context, listen: false);
+    await authService.signUpUser(
+        context: context,
+        name: _userNameController.text.trim(),
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim());
   }
 
   @override
@@ -158,11 +168,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 AppButton(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      _userNameController.clear();
-                      _emailController.clear();
-                      _passwordController.clear();
-                      showSnackbar(context: context, message: 'kayıt başarılı');
-                      navigateToLoginScreen();
+                      signUpUser();
                     }
                   },
                   imageUrl: 'assets/icons/user-plus.png',

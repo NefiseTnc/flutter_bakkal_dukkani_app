@@ -1,7 +1,8 @@
-import 'package:bakkal_dukkani/constants/utils.dart';
 import 'package:bakkal_dukkani/views/authentication/screens/sign_up_screen.dart';
+import 'package:bakkal_dukkani/views/authentication/services/i_auth_service.dart';
 import 'package:bakkal_dukkani/views/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../common/widgets/app_textfield.dart';
 import '../../../constants/global_variables.dart';
 import 'forgot_password_screen.dart';
@@ -13,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
-} 
+}
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -44,10 +45,18 @@ class _LoginScreenState extends State<LoginScreen> {
     Navigator.pushReplacementNamed(context, SignUpScreen.routeName);
   }
 
-
   void navigateToHomeScreen() {
     Navigator.pushNamedAndRemoveUntil(
         context, HomeScreen.routeName, (route) => false);
+  }
+
+  Future<void> signInUser() async {
+    IAuthService authService =
+        Provider.of<IAuthService>(context, listen: false);
+    await authService.signInUser(
+        context: context,
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim());
   }
 
   @override
@@ -160,10 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 AppButton(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      _emailController.clear();
-                      _passwordController.clear();
-                      showSnackbar(context: context, message: 'giriş başarılı');
-                      navigateToHomeScreen();
+                      signInUser();
                     }
                   },
                   imageUrl: 'assets/icons/key.png',
