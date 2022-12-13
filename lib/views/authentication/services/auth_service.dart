@@ -1,17 +1,22 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:bakkal_dukkani/constants/utils.dart';
+import 'package:bakkal_dukkani/models/user.dart';
+import 'package:bakkal_dukkani/providers/user_provider.dart';
 import 'package:bakkal_dukkani/views/authentication/screens/login_screen.dart';
+import 'package:bakkal_dukkani/views/authentication/screens/welcome_screen.dart';
 import 'package:bakkal_dukkani/views/authentication/services/i_auth_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../home/screens/home_screen.dart';
 
 class FirebaseAuthService implements IAuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Future<void> signUpUser(
@@ -20,9 +25,21 @@ class FirebaseAuthService implements IAuthService {
       required String email,
       required String password}) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((UserCredential userCredential) async {
+        var user = userCredential.user!;
 
+        UserModel newUser = UserModel(
+            id: user.uid,
+            name: name,
+            email: email,
+            password: password,
+            address: '',
+            imageUrl: '');
+
+        await _firestore.collection('users').doc(user.uid).set(newUser.toMap());
+      });
 
       showSnackbar(
           context: context,
@@ -62,12 +79,26 @@ class FirebaseAuthService implements IAuthService {
           }
 
           SharedPreferences preferences = await SharedPreferences.getInstance();
-          preferences.setBool('session-status', true);
+          preferences.setBool('user-state', true);
 
-          debugPrint(currentUser.toString());
+          await _firestore
+              .collection('users')
+              .doc(currentUser.uid)
+              .get()
+              .then((DocumentSnapshot doc) {
+            if (doc.id == currentUser.uid) {
+              UserModel userModel = UserModel(
+                id: doc.id,
+                name: doc['name'],
+                email: email,
+                password: password,
+                address: doc['address'],
+                imageUrl: doc['imageUrl'],
+              );
 
-          // ? Burada provider ı nasıl dahil edeceğim?
-          // todo Burada user doküman ı çekip burada ki current id ile oradaki user id yi karşılaştırıp provider a öyle set etmek gerek sanırım.
+              context.read<UserProvider>().setUser(userModel);
+            }
+          });
 
           Navigator.pushNamedAndRemoveUntil(
               context, HomeScreen.routeName, (route) => false);
@@ -100,12 +131,35 @@ class FirebaseAuthService implements IAuthService {
   }
 
   @override
-  Future<void> signOut({required BuildContext context}) {
-    throw UnimplementedError();
+  Future<void> signOut({required BuildContext context}) async {
+    try {
+      await _firebaseAuth.signOut();
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setBool('user-state', false);
+      Navigator.pushNamedAndRemoveUntil(
+          context, WelcomeScreen.routeName, (route) => false);
+
+      showSnackbar(context: context, message: 'Çıkış Yapıldı.');
+    } on FirebaseAuthException catch (e) {
+      showSnackbar(context: context, message: e.message!);
+    }
   }
 
   @override
-  Future<void> deleteAccount({required BuildContext context}) {
-    throw UnimplementedError();
+  Future<void> deleteAccount({required BuildContext context}) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(_firebaseAuth.currentUser!.uid)
+          .delete();
+      await _firebaseAuth.currentUser!.delete();
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setBool('user-state', false);
+      Navigator.pushNamedAndRemoveUntil(
+          context, WelcomeScreen.routeName, (route) => false);
+      showSnackbar(context: context, message: 'Hesap Başarıyla Silindi.');
+    } on FirebaseAuthException catch (e) {
+      showSnackbar(context: context, message: e.message!);
+    }
   }
 }

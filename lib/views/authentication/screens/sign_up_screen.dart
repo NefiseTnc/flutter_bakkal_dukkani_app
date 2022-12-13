@@ -90,9 +90,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             top: size.height * .39,
             right: 0,
             left: 0,
-            child: Column(
-              children: [_content(size), _bottomContent()],
-            ),
+            child: _content(size),
           ),
         ],
       ),
@@ -213,29 +211,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _bottomContent() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text(
-          'veya',
-          style: GlobalVariables.mediumTextStyle,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/icons/google.png'),
-            Image.asset('assets/icons/facebook.png'),
-            const Text(
-              'ile kayıt olun.',
-              style: GlobalVariables.mediumTextStyle,
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

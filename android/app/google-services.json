@@ -29,6 +29,13 @@
             {
               "client_id": "1010555357094-8vp14gss5o4gsr849h3l4t0ahm26h0hg.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1010555357094-chg35q0b8ra1b1j3ojodhk252gb47o9r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nefisebanutunc.bakkalDukkani"
+              }
             }
           ]
         }

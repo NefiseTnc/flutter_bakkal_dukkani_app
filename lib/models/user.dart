@@ -6,13 +6,16 @@ class UserModel {
   final String email;
   final String password;
   final String address;
+  final String imageUrl;
   UserModel({
     required this.id,
     required this.name,
     required this.email,
     required this.password,
     required this.address,
+    required this.imageUrl,
   });
+
 
 
   Map<String, dynamic> toMap() {
@@ -23,6 +26,7 @@ class UserModel {
     result.addAll({'email': email});
     result.addAll({'password': password});
     result.addAll({'address': address});
+    result.addAll({'imageUrl': imageUrl});
   
     return result;
   }
@@ -34,6 +38,7 @@ class UserModel {
       email: map['email'] ?? '',
       password: map['password'] ?? '',
       address: map['address'] ?? '',
+      imageUrl: map['imageUrl'] ?? '',
     );
   }
 
