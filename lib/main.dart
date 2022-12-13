@@ -1,4 +1,5 @@
 import 'package:bakkal_dukkani/views/authentication/screens/welcome_screen.dart';
+import 'package:bakkal_dukkani/views/bottom_navbar/screens/bottom_navbar_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,8 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bakkal_dukkani/providers/user_provider.dart';
 import 'package:bakkal_dukkani/views/authentication/services/auth_service.dart';
 import 'package:bakkal_dukkani/views/authentication/services/i_auth_service.dart';
-import 'package:bakkal_dukkani/views/home/screens/home_screen.dart';
-
 import '/router/router.dart';
 import 'constants/global_variables.dart';
 import 'firebase_options.dart';
@@ -54,7 +53,8 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           scaffoldBackgroundColor: GlobalVariables.backgroundColor,
         ),
-        home: widget.isUser ? const HomeScreen() : const WelcomeScreen(),
+        home:
+            widget.isUser ? const BottomNavBarScreen() : const WelcomeScreen(),
         onGenerateRoute: ((settings) => AppRouter.onGenerateRoute(settings)),
       ),
     );

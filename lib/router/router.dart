@@ -1,6 +1,7 @@
 import 'package:bakkal_dukkani/views/authentication/screens/forgot_password_screen.dart';
 import 'package:bakkal_dukkani/views/authentication/screens/login_screen.dart';
 import 'package:bakkal_dukkani/views/authentication/screens/sign_up_screen.dart';
+import 'package:bakkal_dukkani/views/bottom_navbar/screens/bottom_navbar_screen.dart';
 import 'package:bakkal_dukkani/views/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import '../common/screens/not_found_page_screen.dart';
@@ -34,6 +35,11 @@ class AppRouter {
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (context) => const HomeScreen(),
+        );
+      case BottomNavBarScreen.routeName:
+        return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (context) => const BottomNavBarScreen(),
         );
       default:
         return MaterialPageRoute(
