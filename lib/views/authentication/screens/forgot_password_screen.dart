@@ -1,6 +1,6 @@
 import 'package:bakkal_dukkani/common/widgets/app_textfield.dart';
-import 'package:bakkal_dukkani/views/authentication/screens/reset_password_screen.dart';
 import 'package:bakkal_dukkani/views/authentication/screens/sign_up_screen.dart';
+import 'package:bakkal_dukkani/views/authentication/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/widgets/app_button.dart';
@@ -30,12 +30,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     super.dispose();
   }
 
-  void navigateToResetPassword() {
-    Navigator.pushReplacementNamed(context, ResetPasswordScreen.routeName);
-  }
-
   void navigateToSignUpScreen() {
     Navigator.popAndPushNamed(context, SignUpScreen.routeName);
+  }
+
+  Future<void> sendPasswordResetEmail() async {
+    FirebaseAuthService authService = FirebaseAuthService();
+    authService.sendPasswordResetEmail(
+        context: context, email: _emailController.text.trim());
   }
 
   @override
@@ -134,7 +136,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 AppButton(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      navigateToResetPassword();
+                      sendPasswordResetEmail();
                     }
                   },
                   imageUrl: 'assets/icons/paper-plane.png',

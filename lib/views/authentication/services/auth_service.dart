@@ -162,4 +162,29 @@ class FirebaseAuthService implements IAuthService {
       showSnackbar(context: context, message: e.message!);
     }
   }
+
+  Future<void> sendPasswordResetEmail(
+      {required BuildContext context, required String email}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email).then((value) {
+        Navigator.pushReplacementNamed(
+          context,
+          LoginScreen.routeName,
+        );
+        showSnackbar(
+            context: context,
+            message: 'Parola sıfırlama linki e-postaya gönderildi!');
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        showSnackbar(
+            context: context,
+            message: 'Bu email da bir kullanıcı bulunmamaktadır.');
+      } else if (e.code == 'invalid-email') {
+        showSnackbar(context: context, message: 'Geçersiz email');
+      } else {
+        showSnackbar(context: context, message: e.message!);
+      }
+    }
+  }
 }
