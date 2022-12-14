@@ -1,7 +1,5 @@
-import 'package:bakkal_dukkani/providers/user_provider.dart';
-import 'package:bakkal_dukkani/views/authentication/services/i_auth_service.dart';
+import 'package:bakkal_dukkani/constants/global_variables.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -9,26 +7,98 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var user = context.read<UserProvider>().user;
+    var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Text('Home Screen'),
-          Text(user.email),
-          ElevatedButton(
-              onPressed: () {
-                context.read<IAuthService>().signOut(context: context);
+      body: Column(children: [
+        SizedBox(
+            width: size.width,
+            height: size.height * .2,
+            child: _imageSlider(size))
+      ]),
+    );
+  }
+
+  Widget _imageSlider(Size size) {
+    return Stack(
+      children: [
+        Align(
+          alignment: Alignment.center,
+          child: SizedBox(
+            width: size.width,
+            height: size.height * .2,
+            child: ListView.builder(
+              itemCount: 3,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  width: size.width,
+                  margin: const EdgeInsets.only(right: 10),
+                  child: Image.asset(
+                    'assets/images/top_image.png',
+                    fit: BoxFit.cover,
+                  ),
+                );
               },
-              child: const Text('Çıkış Yap')),
-          ElevatedButton(
-              onPressed: () {
-                context.read<IAuthService>().deleteAccount(context: context);
-              },
-              child: const Text('Hesabı Sil')),
-        ],
-      ),
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 75,
+          right: 25,
+          child: Column(
+            children: const [
+              Text(
+                'Taze Gıdalar Satın Alın',
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
+              Text(
+                'Daha iyi hissedin',
+                style: TextStyle(fontSize: 14, color: Colors.white),
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          right: 0,
+          left: 0,
+          bottom: 10,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 9,
+                height: 9,
+                decoration: BoxDecoration(
+                    color: GlobalVariables.primaryColor,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: GlobalVariables.primaryColor)),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Container(
+                width: 9,
+                height: 9,
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white)),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Container(
+                width: 9,
+                height: 9,
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white)),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

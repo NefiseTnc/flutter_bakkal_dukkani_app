@@ -17,7 +17,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     HomeScreen(),
     Scaffold(
       body: Center(
-        child: Text('Siparişlerim'),
+        child: Text('Kategoriler'),
       ),
     ),
     Scaffold(
@@ -104,8 +104,8 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           BottomNavigationBarItem(
             icon: Container(
                 padding: const EdgeInsets.all(5.0),
-                child: Image.asset('assets/icons/orders.png')),
-            label: 'Siparişlerim',
+                child: Image.asset('assets/icons/category.png')),
+            label: 'Kategoriler',
           ),
           BottomNavigationBarItem(
             icon: Container(
