@@ -1,4 +1,8 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:bakkal_dukkani/constants/global_variables.dart';
+import 'package:bakkal_dukkani/views/home/widgets/category_item.dart';
+import 'package:bakkal_dukkani/views/home/widgets/product_item.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -11,9 +15,42 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Column(children: [
         SizedBox(
-            width: size.width,
-            height: size.height * .2,
-            child: _imageSlider(size))
+          width: size.width,
+          height: size.height * .3,
+          child: _imageSlider(size),
+        ),
+        SizedBox(
+          width: size.width,
+          height: size.height * .1,
+          child: _categories(),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Sebze'),
+                SizedBox(
+                  height: 15,
+                ),
+                Expanded(
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 15.0,
+                            crossAxisSpacing: 15.0),
+                    itemCount: 15,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ProductItem();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
       ]),
     );
   }
@@ -25,7 +62,7 @@ class HomeScreen extends StatelessWidget {
           alignment: Alignment.center,
           child: SizedBox(
             width: size.width,
-            height: size.height * .2,
+            height: size.height * .3,
             child: ListView.builder(
               itemCount: 3,
               scrollDirection: Axis.horizontal,
@@ -99,6 +136,40 @@ class HomeScreen extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+
+  Widget _categories() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Kategoriler',
+            style: GlobalVariables.mediumTextStyle,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Expanded(
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                CategoryItem(text: 'Meyveler & Sebzeler', onTap: () {}),
+                CategoryItem(text: 'Kahvaltılıklar', onTap: () {}),
+                CategoryItem(text: 'İçecekler', onTap: () {}),
+                CategoryItem(text: 'Atıştırmalıklar', onTap: () {}),
+                CategoryItem(text: 'Süt Ürünleri', onTap: () {}),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+        ],
+      ),
     );
   }
 }
