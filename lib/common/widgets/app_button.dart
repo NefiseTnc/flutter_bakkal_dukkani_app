@@ -7,6 +7,7 @@ class AppButton extends StatelessWidget {
   final String? imageUrl;
   final String text;
   final TextStyle textStyle;
+  final double? padding;
 
   const AppButton({
     Key? key,
@@ -16,6 +17,7 @@ class AppButton extends StatelessWidget {
     this.imageUrl,
     required this.text,
     required this.textStyle,
+    this.padding,
   }) : super(key: key);
 
   @override
@@ -23,7 +25,9 @@ class AppButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-          padding: const EdgeInsets.all(10.0),
+          padding: padding != null
+              ? EdgeInsets.all(padding!)
+              : const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(30)),
             color: color,

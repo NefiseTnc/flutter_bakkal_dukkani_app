@@ -16,20 +16,19 @@ class HomeScreen extends StatelessWidget {
       body: Column(children: [
         SizedBox(
           width: size.width,
-          height: size.height * .3,
+          height: size.height * .24,
           child: _imageSlider(size),
         ),
-        SizedBox(
-          width: size.width,
-          height: size.height * .1,
-          child: _categories(),
-        ),
+        _categories(),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(
+                  height: 15,
+                ),
                 Text('Sebze'),
                 SizedBox(
                   height: 15,
@@ -39,14 +38,15 @@ class HomeScreen extends StatelessWidget {
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            mainAxisSpacing: 15.0,
-                            crossAxisSpacing: 15.0),
-                    itemCount: 15,
+                            mainAxisExtent: 200,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10),
+                    itemCount: 2,
                     itemBuilder: (BuildContext context, int index) {
                       return ProductItem();
                     },
                   ),
-                ),
+                )
               ],
             ),
           ),
@@ -84,10 +84,8 @@ class HomeScreen extends StatelessWidget {
           right: 25,
           child: Column(
             children: const [
-              Text(
-                'Taze Gıdalar Satın Alın',
-                style: TextStyle(fontSize: 20, color: Colors.white),
-              ),
+              Text('Taze Gıdalar Satın Alın',
+                  style: TextStyle(fontSize: 16, color: Colors.white)),
               Text(
                 'Daha iyi hissedin',
                 style: TextStyle(fontSize: 14, color: Colors.white),
@@ -141,19 +139,24 @@ class HomeScreen extends StatelessWidget {
 
   Widget _categories() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+      ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            height: 10,
+          ),
           Text(
             'Kategoriler',
             style: GlobalVariables.mediumTextStyle,
           ),
           SizedBox(
-            height: 5,
+            height: 10,
           ),
-          Expanded(
+          SizedBox(
+            height: 32,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
@@ -164,9 +167,6 @@ class HomeScreen extends StatelessWidget {
                 CategoryItem(text: 'Süt Ürünleri', onTap: () {}),
               ],
             ),
-          ),
-          SizedBox(
-            height: 15,
           ),
         ],
       ),

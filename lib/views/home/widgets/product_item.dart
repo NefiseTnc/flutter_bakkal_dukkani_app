@@ -9,9 +9,7 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(color: Colors.white, boxShadow: [
         BoxShadow(
           color: Colors.black.withOpacity(.2),
@@ -28,14 +26,10 @@ class ProductItem extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Center(
-            child: SizedBox(
-              height: 70,
-              width: 130,
-              child: Image.asset(
-                'assets/images/product_item_img1.png',
-                fit: BoxFit.cover,
-              ),
+          Expanded(
+            child: Image.asset(
+              'assets/images/product_item_img1.png',
+              fit: BoxFit.contain,
             ),
           ),
           const SizedBox(
@@ -72,6 +66,10 @@ class ProductItem extends StatelessWidget {
             textStyle: GlobalVariables.mediumBoldTextStyle
                 .copyWith(color: Colors.white),
             imageUrl: 'assets/icons/basket.png',
+            padding: 5,
+          ),
+          const SizedBox(
+            height: 7,
           ),
         ],
       ),
