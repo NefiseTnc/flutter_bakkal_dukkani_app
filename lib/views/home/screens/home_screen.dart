@@ -1,13 +1,44 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:bakkal_dukkani/constants/global_variables.dart';
+import 'package:bakkal_dukkani/models/category.dart';
+import 'package:bakkal_dukkani/models/product.dart';
+import 'package:bakkal_dukkani/views/home/services/i_home_service.dart';
 import 'package:bakkal_dukkani/views/home/widgets/category_item.dart';
 import 'package:bakkal_dukkani/views/home/widgets/product_item.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
   static const String routeName = 'home-screen';
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<Category> categories = [];
+  List<Product> products = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getCategories();
+    getProducts();
+  }
+
+  void getCategories() async {
+    categories = await Provider.of<IHomeService>(context, listen: false)
+        .getAllCategories(context: context);
+    setState(() {});
+  }
+
+  void getProducts() async {
+    products = await Provider.of<IHomeService>(context, listen: false)
+        .getAllProducts(context: context);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +53,14 @@ class HomeScreen extends StatelessWidget {
         _categories(),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
                   height: 15,
                 ),
-                Text('Sebze'),
+                Text('Tüm Ürünler'),
                 SizedBox(
                   height: 15,
                 ),
@@ -41,9 +72,11 @@ class HomeScreen extends StatelessWidget {
                             mainAxisExtent: 200,
                             crossAxisSpacing: 10,
                             mainAxisSpacing: 10),
-                    itemCount: 2,
+                    itemCount: products.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return ProductItem();
+                      return ProductItem(
+                        product: products[index],
+                      );
                     },
                   ),
                 )
@@ -157,15 +190,12 @@ class HomeScreen extends StatelessWidget {
           ),
           SizedBox(
             height: 32,
-            child: ListView(
+            child: ListView.builder(
+              itemCount: categories.length,
               scrollDirection: Axis.horizontal,
-              children: [
-                CategoryItem(text: 'Meyveler & Sebzeler', onTap: () {}),
-                CategoryItem(text: 'Kahvaltılıklar', onTap: () {}),
-                CategoryItem(text: 'İçecekler', onTap: () {}),
-                CategoryItem(text: 'Atıştırmalıklar', onTap: () {}),
-                CategoryItem(text: 'Süt Ürünleri', onTap: () {}),
-              ],
+              itemBuilder: (BuildContext context, int index) {
+                return CategoryItem(text: categories[index].name, onTap: () {});
+              },
             ),
           ),
         ],

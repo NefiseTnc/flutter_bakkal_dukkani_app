@@ -1,5 +1,7 @@
 import 'package:bakkal_dukkani/views/authentication/screens/welcome_screen.dart';
 import 'package:bakkal_dukkani/views/bottom_navbar/screens/bottom_navbar_screen.dart';
+import 'package:bakkal_dukkani/views/home/services/home_service.dart';
+import 'package:bakkal_dukkani/views/home/services/i_home_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,6 +44,9 @@ class _MyAppState extends State<MyApp> {
       providers: [
         Provider<IAuthService>(
           create: (context) => FirebaseAuthService(),
+        ),
+        Provider<IHomeService>(
+          create: (context) => HomeService(),
         ),
         ChangeNotifierProvider<UserProvider>(
           create: (context) => UserProvider(),

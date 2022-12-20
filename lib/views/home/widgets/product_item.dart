@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
+import 'package:bakkal_dukkani/models/product.dart';
+
 import '../../../common/widgets/app_button.dart';
 import '../../../constants/global_variables.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({Key? key}) : super(key: key);
+  const ProductItem({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +33,16 @@ class ProductItem extends StatelessWidget {
             height: 10,
           ),
           Expanded(
-            child: Image.asset(
-              'assets/images/product_item_img1.png',
+            child: Image.network(
+              product.image_url,
               fit: BoxFit.contain,
             ),
           ),
           const SizedBox(
             height: 5,
           ),
-          const Text(
-            'Kırmızı Biber(Taze)',
+          Text(
+            product.name,
             style: GlobalVariables.mediumTextStyle,
           ),
           const SizedBox(
@@ -44,13 +50,13 @@ class ProductItem extends StatelessWidget {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text(
-                '250 gr',
+                '${product.unit_quantity.toString()} ${product.unit}',
                 style: GlobalVariables.smallTextStyle,
               ),
               Text(
-                '\$35',
+                '\$${product.price.toString()}',
                 style: GlobalVariables.mediumBoldTextStyle,
               )
             ],
