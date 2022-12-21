@@ -21,6 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Category> categories = [];
   List<Product> products = [];
 
+  String productListName = 'Tüm Ürünler';
+  bool isClear = false;
+
   @override
   void initState() {
     super.initState();
@@ -50,38 +53,14 @@ class _HomeScreenState extends State<HomeScreen> {
           height: size.height * .24,
           child: _imageSlider(size),
         ),
-        _categories(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: _categories(),
+        ),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 15,
-                ),
-                Text('Tüm Ürünler'),
-                SizedBox(
-                  height: 15,
-                ),
-                Expanded(
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisExtent: 200,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10),
-                    itemCount: products.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ProductItem(
-                        product: products[index],
-                      );
-                    },
-                  ),
-                )
-              ],
-            ),
+            child: _productList(),
           ),
         )
       ]),
@@ -171,35 +150,96 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _categories() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 10,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          'Kategoriler',
+          style: GlobalVariables.mediumTextStyle,
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        SizedBox(
+          height: 32,
+          child: ListView.builder(
+            itemCount: categories.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (BuildContext context, int index) {
+              return CategoryItem(
+                  text: categories[index].name,
+                  onTap: () async {
+                    products =
+                        await Provider.of<IHomeService>(context, listen: false)
+                            .getProductsByCategory(
+                                categoryId: categories[index].id);
+                    productListName = categories[index].name;
+                    isClear = true;
+                    setState(() {});
+                  });
+            },
           ),
-          Text(
-            'Kategoriler',
-            style: GlobalVariables.mediumTextStyle,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            height: 32,
-            child: ListView.builder(
-              itemCount: categories.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) {
-                return CategoryItem(text: categories[index].name, onTap: () {});
-              },
+        ),
+      ],
+    );
+  }
+
+  Widget _productList() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        Row(
+          children: [
+            isClear
+                ? GestureDetector(
+                    onTap: () {
+                      getProducts();
+                      productListName = 'Tüm Ürünler';
+                      isClear = false;
+                      setState(() {});
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(.5),
+                            shape: BoxShape.circle),
+                        child: Icon(
+                          Icons.clear_outlined,
+                          color: GlobalVariables.errorColor,
+                          size: 15,
+                        )),
+                  )
+                : SizedBox(),
+            SizedBox(
+              width: 10,
             ),
+            Text(productListName),
+          ],
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Expanded(
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisExtent: 200,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10),
+            itemCount: products.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ProductItem(
+                product: products[index],
+              );
+            },
           ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }

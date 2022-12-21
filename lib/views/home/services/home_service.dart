@@ -18,7 +18,6 @@ class HomeService implements IHomeService {
       for (var category in categoryDoc.docs) {
         categories.add(Category.fromMap(category.data()));
       }
-
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -28,15 +27,31 @@ class HomeService implements IHomeService {
   @override
   Future<List<Product>> getAllProducts({required BuildContext context}) async {
     List<Product> products = [];
-    try { 
+    try {
       var productDocs = await _firestore.collection('products').get();
       for (var product in productDocs.docs) {
         products.add(Product.fromMap(product.data()));
       }
-
     } catch (e) {
       debugPrint(e.toString());
     }
+    return products;
+  }
+  
+ @override
+  Future<List<Product>> getProductsByCategory(
+      {required String categoryId}) async {
+    List<Product> products = [];
+
+    var productDocs = await _firestore
+        .collection('products')
+        .where('category_id', isEqualTo: categoryId)
+        .get();
+
+    for (var product in productDocs.docs) {
+      products.add(Product.fromMap(product.data()));
+    }
+
     return products;
   }
 }
