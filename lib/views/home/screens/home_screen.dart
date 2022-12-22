@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:bakkal_dukkani/constants/global_variables.dart';
 import 'package:bakkal_dukkani/models/category.dart';
 import 'package:bakkal_dukkani/models/product.dart';
@@ -47,22 +45,34 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Column(children: [
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(
           width: size.width,
           height: size.height * .24,
           child: _imageSlider(size),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: _categories(),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+          child: categories.isNotEmpty
+              ? _categories()
+              : const LinearProgressIndicator(
+                  color: GlobalVariables.primaryColor,
+                ),
         ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: _productList(),
-          ),
-        )
+        products.isNotEmpty
+            ? Expanded(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: _productList()),
+              )
+            : const Padding(
+                padding: EdgeInsets.all(25.0),
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: GlobalVariables.primaryColor,
+                  ),
+                ),
+              ),
       ]),
     );
   }
@@ -153,14 +163,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
-        Text(
+        const Text(
           'Kategoriler',
           style: GlobalVariables.mediumTextStyle,
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         SizedBox(
@@ -191,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         Row(
@@ -208,20 +218,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         decoration: BoxDecoration(
                             color: Colors.grey.withOpacity(.5),
                             shape: BoxShape.circle),
-                        child: Icon(
+                        child: const Icon(
                           Icons.clear_outlined,
                           color: GlobalVariables.errorColor,
                           size: 15,
                         )),
                   )
-                : SizedBox(),
-            SizedBox(
+                : const SizedBox(),
+            const SizedBox(
               width: 10,
             ),
             Text(productListName),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         Expanded(

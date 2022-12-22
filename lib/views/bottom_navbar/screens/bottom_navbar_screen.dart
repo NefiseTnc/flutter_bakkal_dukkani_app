@@ -17,7 +17,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     HomeScreen(),
     Scaffold(
       body: Center(
-        child: Text('Kategoriler'),
+        child: Text('Sepetim'),
       ),
     ),
     Scaffold(
@@ -46,38 +46,19 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
       leading: Image.asset('assets/icons/bars.png'),
       backgroundColor: Colors.white,
       elevation: .5,
-      actions: [
-        Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Align(
-                  alignment: Alignment.center,
-                  child: Image.asset('assets/icons/cart.png')),
-            ),
-            Positioned(
-              top: 15,
-              right: 18,
-              child: Container(
-                width: 16,
-                height: 16,
-                decoration: const BoxDecoration(
-                  color: GlobalVariables.primaryColor,
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Text(
-                    '0',
-                    style: GlobalVariables.xSmallBoldTextStyle.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
-      ],
+      centerTitle: true,
+      title: RichText(
+        text: const TextSpan(children: [
+          TextSpan(
+            text: 'Bakkal ',
+            style: TextStyle(color: GlobalVariables.textColor, fontSize: 22),
+          ),
+          TextSpan(
+            text: 'Dükkanı',
+            style: TextStyle(color: GlobalVariables.primaryColor, fontSize: 22),
+          ),
+        ]),
+      ),
     );
   }
 
@@ -103,9 +84,41 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           ),
           BottomNavigationBarItem(
             icon: Container(
-                padding: const EdgeInsets.all(5.0),
-                child: Image.asset('assets/icons/category.png')),
-            label: 'Kategoriler',
+              padding: const EdgeInsets.all(5.0),
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Image.asset(
+                          'assets/icons/cart.png',
+                          color: GlobalVariables.primaryColor,
+                        )),
+                  ),
+                  Positioned(
+                    top: 0,
+                    right: 17,
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: GlobalVariables.secondaryColor.withOpacity(.8),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Center(
+                        child: Text('0',
+                            style: TextStyle(
+                                fontSize: 11,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            label: 'Sepetim',
           ),
           BottomNavigationBarItem(
             icon: Container(
