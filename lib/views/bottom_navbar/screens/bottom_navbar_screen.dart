@@ -17,19 +17,14 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     HomeScreen(),
     Scaffold(
       body: Center(
-        child: Text('Siparişlerim'),
-      ),
-    ),
-    Scaffold(
-      body: Center(
         child: Text('Arama'),
       ),
     ),
     Scaffold(
       body: Center(
-        child: Text('Hesabım'),
+        child: Text('Sepetim'),
       ),
-    )
+    ),
   ];
 
   @override
@@ -43,7 +38,10 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
 
   AppBar _appBar() {
     return AppBar(
-      leading: Image.asset('assets/icons/bars.png'),
+      leading: const Icon(
+        Icons.menu,
+        color: GlobalVariables.primaryColor,
+      ),
       backgroundColor: Colors.white,
       elevation: .5,
       centerTitle: true,
