@@ -16,16 +16,19 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 5),
-      decoration: BoxDecoration(color: Colors.white, boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(.2),
-          blurRadius: 5,
-        ),
-        BoxShadow(
-          color: Colors.black.withOpacity(.2),
-          blurRadius: 5,
-        ),
-      ]),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(.2),
+            blurRadius: 5,
+          ),
+          BoxShadow(
+            color: Colors.black.withOpacity(.2),
+            blurRadius: 5,
+          ),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

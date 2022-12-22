@@ -2,7 +2,7 @@ import 'package:bakkal_dukkani/constants/global_variables.dart';
 import 'package:bakkal_dukkani/models/category.dart';
 import 'package:bakkal_dukkani/models/product.dart';
 import 'package:bakkal_dukkani/views/home/services/i_home_service.dart';
-import 'package:bakkal_dukkani/views/home/widgets/category_item.dart';
+import 'package:bakkal_dukkani/common/widgets/category_item.dart';
 import 'package:bakkal_dukkani/views/home/widgets/product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -179,17 +179,20 @@ class _HomeScreenState extends State<HomeScreen> {
             itemCount: categories.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (BuildContext context, int index) {
-              return CategoryItem(
-                  text: categories[index].name,
-                  onTap: () async {
-                    products =
-                        await Provider.of<IHomeService>(context, listen: false)
-                            .getProductsByCategory(
-                                categoryId: categories[index].id);
-                    productListName = categories[index].name;
-                    isClear = true;
-                    setState(() {});
-                  });
+              return Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: CategoryItem(
+                    text: categories[index].name,
+                    onTap: () async {
+                      products = await Provider.of<IHomeService>(context,
+                              listen: false)
+                          .getProductsByCategory(
+                              categoryId: categories[index].id);
+                      productListName = categories[index].name;
+                      isClear = true;
+                      setState(() {});
+                    }),
+              );
             },
           ),
         ),
@@ -243,8 +246,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisSpacing: 10),
             itemCount: products.length,
             itemBuilder: (BuildContext context, int index) {
-              return ProductItem(
-                product: products[index],
+              return Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: ProductItem(
+                  product: products[index],
+                ),
               );
             },
           ),

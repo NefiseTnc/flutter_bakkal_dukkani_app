@@ -1,4 +1,5 @@
 import 'package:bakkal_dukkani/constants/global_variables.dart';
+import 'package:bakkal_dukkani/views/category_list/screens/category_list_screen.dart';
 import 'package:bakkal_dukkani/views/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -15,11 +16,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
 
   List pages = const [
     HomeScreen(),
-    Scaffold(
-      body: Center(
-        child: Text('Sepetim'),
-      ),
-    ),
+    CategoryListScreen(),
     Scaffold(
       body: Center(
         child: Text('Arama'),
@@ -59,6 +56,43 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           ),
         ]),
       ),
+      actions: [
+        Container(
+          padding: const EdgeInsets.all(5.0),
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Image.asset(
+                      'assets/icons/cart.png',
+                      color: GlobalVariables.secondaryColor,
+                    )),
+              ),
+              Positioned(
+                top: 7,
+                right: 15,
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  decoration: const BoxDecoration(
+                    color: GlobalVariables.primaryColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Center(
+                    child: Text('0',
+                        style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -84,41 +118,9 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           ),
           BottomNavigationBarItem(
             icon: Container(
-              padding: const EdgeInsets.all(5.0),
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Align(
-                        alignment: Alignment.center,
-                        child: Image.asset(
-                          'assets/icons/cart.png',
-                          color: GlobalVariables.primaryColor,
-                        )),
-                  ),
-                  Positioned(
-                    top: 0,
-                    right: 17,
-                    child: Container(
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        color: GlobalVariables.secondaryColor.withOpacity(.8),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Center(
-                        child: Text('0',
-                            style: TextStyle(
-                                fontSize: 11,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            label: 'Sepetim',
+                padding: const EdgeInsets.all(5.0),
+                child: Image.asset('assets/icons/category.png')),
+            label: 'Kategoriler',
           ),
           BottomNavigationBarItem(
             icon: Container(
