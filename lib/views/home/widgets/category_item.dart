@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/global_variables.dart';
+import '../../../constants/global_variables.dart';
 
 class CategoryItem extends StatelessWidget {
   const CategoryItem({

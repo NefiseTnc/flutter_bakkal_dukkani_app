@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:bakkal_dukkani/models/product.dart';
 
 import '../../../constants/global_variables.dart';
-import '../../home/widgets/product_item.dart';
+import '../widgets/product_item.dart';
 
 class ProductListScreen extends StatefulWidget {
   static const String routeName = 'product-list-screen';
@@ -79,44 +79,45 @@ class _ProductListScreenState extends State<ProductListScreen> {
           }),
       title: Text(
         widget.categoryName,
-        style: const TextStyle(color: GlobalVariables.secondaryColor),
+        style: const TextStyle(
+            color: GlobalVariables.textColor, fontWeight: FontWeight.normal),
       ),
       actions: [
         Container(
           padding: const EdgeInsets.all(5.0),
           child: Stack(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              const Padding(
+                padding: EdgeInsets.only(right: 5.0),
                 child: Align(
                     alignment: Alignment.center,
-                    child: Image.asset(
-                      'assets/icons/cart.png',
+                    child: Icon(
+                      Icons.notifications,
                       color: GlobalVariables.secondaryColor,
                     )),
               ),
               Positioned(
-                top: 7,
-                right: 15,
+                top: 13,
+                right: 7,
                 child: Container(
-                  width: 20,
-                  height: 20,
+                  width: 7,
+                  height: 7,
                   decoration: const BoxDecoration(
                     color: GlobalVariables.primaryColor,
                     shape: BoxShape.circle,
-                  ),
-                  child: const Center(
-                    child: Text('0',
-                        style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold)),
                   ),
                 ),
               )
             ],
           ),
         ),
+        const Padding(
+          padding: EdgeInsets.only(right: 5.0),
+          child: Icon(
+            Icons.account_circle_rounded,
+            color: GlobalVariables.secondaryColor,
+          ),
+        )
       ],
     );
   }

@@ -1,5 +1,4 @@
 import 'package:bakkal_dukkani/constants/global_variables.dart';
-import 'package:bakkal_dukkani/views/category_list/screens/category_list_screen.dart';
 import 'package:bakkal_dukkani/views/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +15,11 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
 
   List pages = const [
     HomeScreen(),
-    CategoryListScreen(),
+    Scaffold(
+      body: Center(
+        child: Text('Siparişlerim'),
+      ),
+    ),
     Scaffold(
       body: Center(
         child: Text('Arama'),
@@ -61,37 +64,37 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           padding: const EdgeInsets.all(5.0),
           child: Stack(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              const Padding(
+                padding: EdgeInsets.only(right: 5.0),
                 child: Align(
                     alignment: Alignment.center,
-                    child: Image.asset(
-                      'assets/icons/cart.png',
+                    child: Icon(
+                      Icons.notifications,
                       color: GlobalVariables.secondaryColor,
                     )),
               ),
               Positioned(
-                top: 7,
-                right: 15,
+                top: 13,
+                right: 7,
                 child: Container(
-                  width: 20,
-                  height: 20,
+                  width: 7,
+                  height: 7,
                   decoration: const BoxDecoration(
                     color: GlobalVariables.primaryColor,
                     shape: BoxShape.circle,
-                  ),
-                  child: const Center(
-                    child: Text('0',
-                        style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold)),
                   ),
                 ),
               )
             ],
           ),
         ),
+        const Padding(
+          padding: EdgeInsets.only(right: 5.0),
+          child: Icon(
+            Icons.account_circle_rounded,
+            color: GlobalVariables.secondaryColor,
+          ),
+        )
       ],
     );
   }
@@ -119,21 +122,47 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           BottomNavigationBarItem(
             icon: Container(
                 padding: const EdgeInsets.all(5.0),
-                child: Image.asset('assets/icons/category.png')),
-            label: 'Kategoriler',
-          ),
-          BottomNavigationBarItem(
-            icon: Container(
-                padding: const EdgeInsets.all(5.0),
                 child: Image.asset('assets/icons/search.png')),
             label: 'Arama',
           ),
           BottomNavigationBarItem(
             icon: Container(
-                padding: const EdgeInsets.all(5.0),
-                child: Image.asset('assets/icons/account.png')),
-            label: 'Hesabım',
-          )
+              padding: const EdgeInsets.all(5.0),
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Image.asset(
+                          'assets/icons/cart.png',
+                          color: GlobalVariables.primaryColor,
+                        )),
+                  ),
+                  Positioned(
+                    top: 0,
+                    right: 35,
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: GlobalVariables.secondaryColor.withOpacity(.8),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Center(
+                        child: Text('0',
+                            style: TextStyle(
+                                fontSize: 11,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            label: 'Sepetim',
+          ),
         ]);
   }
 }

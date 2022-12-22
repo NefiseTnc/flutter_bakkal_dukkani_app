@@ -1,8 +1,10 @@
 import 'package:bakkal_dukkani/constants/global_variables.dart';
 import 'package:bakkal_dukkani/models/category.dart';
 import 'package:bakkal_dukkani/models/product.dart';
+import 'package:bakkal_dukkani/views/home/screens/category_list_screen.dart';
+import 'package:bakkal_dukkani/views/home/screens/product_list_screen.dart';
 import 'package:bakkal_dukkani/views/home/services/i_home_service.dart';
-import 'package:bakkal_dukkani/common/widgets/category_item.dart';
+import 'package:bakkal_dukkani/views/home/widgets/category_item.dart';
 import 'package:bakkal_dukkani/views/home/widgets/product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,9 +20,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Category> categories = [];
   List<Product> products = [];
-
-  String productListName = 'Tüm Ürünler';
-  bool isClear = false;
 
   @override
   void initState() {
@@ -39,6 +38,21 @@ class _HomeScreenState extends State<HomeScreen> {
     products = await Provider.of<IHomeService>(context, listen: false)
         .getAllProducts(context: context);
     setState(() {});
+  }
+
+  void navigateCategoryListScreen(List<Category> categories) {
+    Navigator.pushNamed(context, CategoryListScreen.routeName,
+        arguments: categories);
+  }
+
+  void navigateToProductListScreen(
+      List<Product> products, String categoryName) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProductListScreen(
+              categoryName: categoryName, productList: products),
+        ));
   }
 
   @override
@@ -166,9 +180,23 @@ class _HomeScreenState extends State<HomeScreen> {
         const SizedBox(
           height: 10,
         ),
-        const Text(
-          'Kategoriler',
-          style: GlobalVariables.mediumTextStyle,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Kategoriler',
+              style: GlobalVariables.mediumTextStyle,
+            ),
+            GestureDetector(
+              onTap: () {
+                navigateCategoryListScreen(categories);
+              },
+              child: const Text(
+                'Hepsini Gör',
+                style: GlobalVariables.mediumTextStyle,
+              ),
+            ),
+          ],
         ),
         const SizedBox(
           height: 10,
@@ -184,13 +212,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CategoryItem(
                     text: categories[index].name,
                     onTap: () async {
-                      products = await Provider.of<IHomeService>(context,
+                      List<Product> products = await Provider.of<IHomeService>(
+                              context,
                               listen: false)
                           .getProductsByCategory(
                               categoryId: categories[index].id);
-                      productListName = categories[index].name;
-                      isClear = true;
-                      setState(() {});
+
+                      navigateToProductListScreen(
+                          products, categories[index].name);
                     }),
               );
             },
@@ -207,33 +236,7 @@ class _HomeScreenState extends State<HomeScreen> {
         const SizedBox(
           height: 15,
         ),
-        Row(
-          children: [
-            isClear
-                ? GestureDetector(
-                    onTap: () {
-                      getProducts();
-                      productListName = 'Tüm Ürünler';
-                      isClear = false;
-                      setState(() {});
-                    },
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(.5),
-                            shape: BoxShape.circle),
-                        child: const Icon(
-                          Icons.clear_outlined,
-                          color: GlobalVariables.errorColor,
-                          size: 15,
-                        )),
-                  )
-                : const SizedBox(),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(productListName),
-          ],
-        ),
+        const Text('Tüm Ürünler'),
         const SizedBox(
           height: 15,
         ),
