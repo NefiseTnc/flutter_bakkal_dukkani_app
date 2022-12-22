@@ -13,7 +13,7 @@ class BottomNavBarScreen extends StatefulWidget {
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   var _currentIndex = 0;
 
-  List pages = const [
+  List<Widget> pages = const [
     HomeScreen(),
     Scaffold(
       body: Center(
@@ -31,7 +31,10 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(),
-      body: pages[_currentIndex],
+      body: IndexedStack(
+        index: _currentIndex,
+        children: pages,
+      ),
       bottomNavigationBar: _bottomNavigationBar(),
     );
   }
