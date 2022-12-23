@@ -25,4 +25,15 @@ class GlobalVariables {
   static const largeTextStyle = TextStyle(fontSize: 14, color: textColor);
   static const largeBoldTextStyle =
       TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: textColor);
+
+  static List<BoxShadow> standartBoxShadows = [
+    BoxShadow(
+      color: Colors.black.withOpacity(.2),
+      blurRadius: 5,
+    ),
+    BoxShadow(
+      color: Colors.black.withOpacity(.2),
+      blurRadius: 5,
+    ),
+  ];
 }

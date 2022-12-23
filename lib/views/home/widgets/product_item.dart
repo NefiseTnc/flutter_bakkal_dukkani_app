@@ -9,8 +9,10 @@ class ProductItem extends StatelessWidget {
   const ProductItem({
     Key? key,
     required this.product,
+    required this.appButtonOnTap,
   }) : super(key: key);
   final Product product;
+  final VoidCallback appButtonOnTap;
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +20,7 @@ class ProductItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(.2),
-            blurRadius: 5,
-          ),
-          BoxShadow(
-            color: Colors.black.withOpacity(.2),
-            blurRadius: 5,
-          ),
-        ],
+        boxShadow: GlobalVariables.standartBoxShadows,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +62,7 @@ class ProductItem extends StatelessWidget {
             height: 7,
           ),
           AppButton(
-            onTap: () {},
+            onTap: appButtonOnTap,
             color: GlobalVariables.primaryColor,
             borderColor: GlobalVariables.primaryColor,
             text: 'Sepete ekle',

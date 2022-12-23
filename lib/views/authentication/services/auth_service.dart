@@ -5,14 +5,13 @@ import 'package:bakkal_dukkani/providers/user_provider.dart';
 import 'package:bakkal_dukkani/views/authentication/screens/login_screen.dart';
 import 'package:bakkal_dukkani/views/authentication/screens/welcome_screen.dart';
 import 'package:bakkal_dukkani/views/authentication/services/i_auth_service.dart';
+import 'package:bakkal_dukkani/views/bottom_navbar/screens/bottom_navbar_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../home/screens/home_screen.dart';
 
 class FirebaseAuthService implements IAuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -101,7 +100,7 @@ class FirebaseAuthService implements IAuthService {
           });
 
           Navigator.pushNamedAndRemoveUntil(
-              context, HomeScreen.routeName, (route) => false);
+              context, BottomNavBarScreen.routeName, (route) => false);
         }
       });
     } on FirebaseAuthException catch (e) {

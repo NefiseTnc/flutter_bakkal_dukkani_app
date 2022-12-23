@@ -4,6 +4,7 @@ import 'package:bakkal_dukkani/views/authentication/screens/sign_up_screen.dart'
 import 'package:bakkal_dukkani/views/bottom_navbar/screens/bottom_navbar_screen.dart';
 import 'package:bakkal_dukkani/views/home/screens/category_list_screen.dart';
 import 'package:bakkal_dukkani/views/home/screens/home_screen.dart';
+import 'package:bakkal_dukkani/views/search_product/screens/search_product_screen.dart';
 import 'package:flutter/material.dart';
 import '../common/screens/not_found_page_screen.dart';
 import '../models/category.dart';
@@ -32,7 +33,6 @@ class AppRouter {
           settings: routeSettings,
           builder: (context) => const ForgotPasswordScreen(),
         );
-
       case HomeScreen.routeName:
         return MaterialPageRoute(
           settings: routeSettings,
@@ -50,6 +50,12 @@ class AppRouter {
           builder: (context) => CategoryListScreen(
             categories: categories,
           ),
+        );
+
+      case SearchProductScreen.routeName:
+        return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (context) => const SearchProductScreen(),
         );
 
       default:

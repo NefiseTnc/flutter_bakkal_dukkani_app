@@ -43,18 +43,8 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
           width: size.width,
           decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(.2),
-                blurRadius: 5,
-              ),
-              BoxShadow(
-                color: Colors.black.withOpacity(.2),
-                blurRadius: 5,
-              ),
-            ],
-          ),
+              color: Colors.white,
+              boxShadow: GlobalVariables.standartBoxShadows),
           child: ListView.builder(
             itemCount: widget.categories.length,
             itemBuilder: (BuildContext context, int index) {

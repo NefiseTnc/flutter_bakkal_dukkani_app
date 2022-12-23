@@ -253,6 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(2.0),
                 child: ProductItem(
                   product: products[index],
+                  appButtonOnTap: () {},
                 ),
               );
             },

@@ -49,6 +49,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                             padding: const EdgeInsets.all(2.0),
                             child: ProductItem(
                               product: widget.productList[index],
+                              appButtonOnTap: () {},
                             ),
                           );
                         },

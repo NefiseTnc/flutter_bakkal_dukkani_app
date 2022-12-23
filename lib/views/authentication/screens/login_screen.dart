@@ -1,6 +1,5 @@
 import 'package:bakkal_dukkani/views/authentication/screens/sign_up_screen.dart';
 import 'package:bakkal_dukkani/views/authentication/services/i_auth_service.dart';
-import 'package:bakkal_dukkani/views/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../common/widgets/app_textfield.dart';
@@ -44,12 +43,6 @@ class _LoginScreenState extends State<LoginScreen> {
   void navigateToSignUpScreen() {
     Navigator.pushReplacementNamed(context, SignUpScreen.routeName);
   }
-
-  void navigateToHomeScreen() {
-    Navigator.pushNamedAndRemoveUntil(
-        context, HomeScreen.routeName, (route) => false);
-  }
-
   Future<void> signInUser() async {
     IAuthService authService =
         Provider.of<IAuthService>(context, listen: false);

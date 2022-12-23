@@ -1,5 +1,6 @@
 import 'package:bakkal_dukkani/constants/global_variables.dart';
 import 'package:bakkal_dukkani/views/home/screens/home_screen.dart';
+import 'package:bakkal_dukkani/views/search_product/screens/search_product_screen.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
@@ -13,13 +14,9 @@ class BottomNavBarScreen extends StatefulWidget {
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   var _currentIndex = 0;
 
-  List<Widget> pages = const [
+  final List<Widget> _pages = const [
     HomeScreen(),
-    Scaffold(
-      body: Center(
-        child: Text('Arama'),
-      ),
-    ),
+    SearchProductScreen(),
     Scaffold(
       body: Center(
         child: Text('Sepetim'),
@@ -33,7 +30,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
       appBar: _appBar(),
       body: IndexedStack(
         index: _currentIndex,
-        children: pages,
+        children: _pages,
       ),
       bottomNavigationBar: _bottomNavigationBar(),
     );
