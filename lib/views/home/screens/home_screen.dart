@@ -6,6 +6,7 @@ import 'package:bakkal_dukkani/views/home/screens/product_list_screen.dart';
 import 'package:bakkal_dukkani/views/home/services/i_home_service.dart';
 import 'package:bakkal_dukkani/views/home/widgets/category_item.dart';
 import 'package:bakkal_dukkani/views/home/widgets/product_item.dart';
+import 'package:bakkal_dukkani/views/product_details/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -53,6 +54,11 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (context) => ProductListScreen(
               categoryName: categoryName, productList: products),
         ));
+  }
+
+  void navigateToProductDetailsScreen(Product product) {
+    Navigator.pushNamed(context, ProductDetailsScreen.routeName,
+        arguments: product);
   }
 
   @override
@@ -251,9 +257,14 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (BuildContext context, int index) {
               return Padding(
                 padding: const EdgeInsets.all(2.0),
-                child: ProductItem(
-                  product: products[index],
-                  appButtonOnTap: () {},
+                child: GestureDetector(
+                  onTap: () {
+                    navigateToProductDetailsScreen(products[index]);
+                  },
+                  child: ProductItem(
+                    product: products[index],
+                    appButtonOnTap: () {},
+                  ),
                 ),
               );
             },

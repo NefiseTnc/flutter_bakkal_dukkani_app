@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:bakkal_dukkani/models/product.dart';
 
+import '../../../common/widgets/app_bar.dart';
 import '../../../constants/global_variables.dart';
+import '../../product_details/screens/product_details_screen.dart';
 import '../widgets/product_item.dart';
 
 class ProductListScreen extends StatefulWidget {
@@ -21,13 +23,25 @@ class ProductListScreen extends StatefulWidget {
 }
 
 class _ProductListScreenState extends State<ProductListScreen> {
+  void navigateToProductDetailsScreen(Product product) {
+    Navigator.pushNamed(context, ProductDetailsScreen.routeName,
+        arguments: product);
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: _appBar(),
+        appBar: appBar(context),
         body: Column(
           children: [
+            const SizedBox(
+              height: 15,
+            ),
+            Text(
+              widget.categoryName,
+              style: GlobalVariables.largeBoldTextStyle,
+            ),
             const SizedBox(
               height: 15,
             ),
@@ -47,9 +61,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
                         itemBuilder: (BuildContext context, int index) {
                           return Padding(
                             padding: const EdgeInsets.all(2.0),
-                            child: ProductItem(
-                              product: widget.productList[index],
-                              appButtonOnTap: () {},
+                            child: GestureDetector(
+                              onTap: () => navigateToProductDetailsScreen(
+                                  widget.productList[index]),
+                              child: ProductItem(
+                                product: widget.productList[index],
+                                appButtonOnTap: () {},
+                              ),
                             ),
                           );
                         },
@@ -63,63 +81,5 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   ),
           ],
         ));
-  }
-
-  AppBar _appBar() {
-    return AppBar(
-      backgroundColor: Colors.white,
-      elevation: .5,
-      centerTitle: true,
-      leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: GlobalVariables.primaryColor,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          }),
-      title: Text(
-        widget.categoryName,
-        style: const TextStyle(
-            color: GlobalVariables.textColor, fontWeight: FontWeight.normal),
-      ),
-      actions: [
-        Container(
-          padding: const EdgeInsets.all(5.0),
-          child: Stack(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(right: 5.0),
-                child: Align(
-                    alignment: Alignment.center,
-                    child: Icon(
-                      Icons.notifications,
-                      color: GlobalVariables.secondaryColor,
-                    )),
-              ),
-              Positioned(
-                top: 13,
-                right: 7,
-                child: Container(
-                  width: 7,
-                  height: 7,
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.primaryColor,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.only(right: 5.0),
-          child: Icon(
-            Icons.account_circle_rounded,
-            color: GlobalVariables.secondaryColor,
-          ),
-        )
-      ],
-    );
   }
 }

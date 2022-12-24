@@ -4,10 +4,12 @@ import 'package:bakkal_dukkani/views/authentication/screens/sign_up_screen.dart'
 import 'package:bakkal_dukkani/views/bottom_navbar/screens/bottom_navbar_screen.dart';
 import 'package:bakkal_dukkani/views/home/screens/category_list_screen.dart';
 import 'package:bakkal_dukkani/views/home/screens/home_screen.dart';
+import 'package:bakkal_dukkani/views/product_details/screens/product_details_screen.dart';
 import 'package:bakkal_dukkani/views/search_product/screens/search_product_screen.dart';
 import 'package:flutter/material.dart';
 import '../common/screens/not_found_page_screen.dart';
 import '../models/category.dart';
+import '../models/product.dart';
 import '../views/authentication/screens/welcome_screen.dart';
 
 class AppRouter {
@@ -56,6 +58,15 @@ class AppRouter {
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (context) => const SearchProductScreen(),
+        );
+
+      case ProductDetailsScreen.routeName:
+        var product = routeSettings.arguments as Product;
+        return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (context) => ProductDetailsScreen(
+            product: product,
+          ),
         );
 
       default:

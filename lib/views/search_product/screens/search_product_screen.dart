@@ -6,6 +6,7 @@ import 'package:bakkal_dukkani/constants/global_variables.dart';
 import 'package:provider/provider.dart';
 
 import '../../../models/product.dart';
+import '../../product_details/screens/product_details_screen.dart';
 import '../widgets/search_product_item.dart';
 
 class SearchProductScreen extends StatefulWidget {
@@ -49,6 +50,11 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
     setState(() {});
   }
 
+  void navigateToProductDetailsScreen(Product product) {
+    Navigator.pushNamed(context, ProductDetailsScreen.routeName,
+        arguments: product);
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -86,9 +92,14 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: SearchProductItem(
-                        product: searchProductList[index],
-                        appButtonOnTap: () {},
+                      child: GestureDetector(
+                        onTap: () => navigateToProductDetailsScreen(
+                          searchProductList[index],
+                        ),
+                        child: SearchProductItem(
+                          product: searchProductList[index],
+                          appButtonOnTap: () {},
+                        ),
                       ),
                     );
                   },

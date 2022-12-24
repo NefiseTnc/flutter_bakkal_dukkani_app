@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:bakkal_dukkani/views/home/widgets/category_item.dart';
 import 'package:bakkal_dukkani/views/home/screens/product_list_screen.dart';
 
+import '../../../common/widgets/app_bar.dart';
 import '../../../constants/global_variables.dart';
 import '../../../models/category.dart';
 import '../../../models/product.dart';
@@ -36,7 +37,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: _appBar(),
+      appBar: appBar(context),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 10),
         child: Container(
@@ -67,64 +68,6 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  AppBar _appBar() {
-    return AppBar(
-      backgroundColor: Colors.white,
-      elevation: .5,
-      centerTitle: true,
-      leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: GlobalVariables.primaryColor,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          }),
-      title: const Text(
-        'Kategoriler',
-        style: TextStyle(
-            color: GlobalVariables.textColor, fontWeight: FontWeight.normal),
-      ),
-      actions: [
-        Container(
-          padding: const EdgeInsets.all(5.0),
-          child: Stack(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(right: 5.0),
-                child: Align(
-                    alignment: Alignment.center,
-                    child: Icon(
-                      Icons.notifications,
-                      color: GlobalVariables.secondaryColor,
-                    )),
-              ),
-              Positioned(
-                top: 13,
-                right: 7,
-                child: Container(
-                  width: 7,
-                  height: 7,
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.primaryColor,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.only(right: 5.0),
-          child: Icon(
-            Icons.account_circle_rounded,
-            color: GlobalVariables.secondaryColor,
-          ),
-        )
-      ],
     );
   }
 }

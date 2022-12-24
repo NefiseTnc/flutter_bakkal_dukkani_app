@@ -2,7 +2,6 @@ import 'package:bakkal_dukkani/constants/global_variables.dart';
 import 'package:bakkal_dukkani/views/home/screens/home_screen.dart';
 import 'package:bakkal_dukkani/views/search_product/screens/search_product_screen.dart';
 import 'package:flutter/material.dart';
-
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({Key? key}) : super(key: key);
   static const String routeName = 'bottom-navbar-screen';
@@ -36,66 +35,67 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     );
   }
 
-  AppBar _appBar() {
-    return AppBar(
-      leading: const Icon(
-        Icons.menu,
-        color: GlobalVariables.primaryColor,
-      ),
-      backgroundColor: Colors.white,
-      elevation: .5,
-      centerTitle: true,
-      title: RichText(
-        text: const TextSpan(children: [
-          TextSpan(
-            text: 'Bakkal ',
-            style: TextStyle(color: GlobalVariables.textColor, fontSize: 22),
-          ),
-          TextSpan(
-            text: 'Dükkanı',
-            style: TextStyle(color: GlobalVariables.primaryColor, fontSize: 22),
-          ),
-        ]),
-      ),
-      actions: [
-        Container(
-          padding: const EdgeInsets.all(5.0),
-          child: Stack(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(right: 5.0),
-                child: Align(
-                    alignment: Alignment.center,
-                    child: Icon(
-                      Icons.notifications,
-                      color: GlobalVariables.secondaryColor,
-                    )),
-              ),
-              Positioned(
-                top: 13,
-                right: 7,
-                child: Container(
-                  width: 7,
-                  height: 7,
-                  decoration: const BoxDecoration(
-                    color: GlobalVariables.primaryColor,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              )
-            ],
-          ),
+AppBar _appBar() {
+  return AppBar(
+    leading: const Icon(
+      Icons.menu,
+      color: GlobalVariables.primaryColor,
+    ),
+    backgroundColor: Colors.white,
+    elevation: .5,
+    centerTitle: true,
+    title: RichText(
+      text: const TextSpan(children: [
+        TextSpan(
+          text: 'Bakkal ',
+          style: TextStyle(color: GlobalVariables.textColor, fontSize: 22),
         ),
-        const Padding(
-          padding: EdgeInsets.only(right: 5.0),
-          child: Icon(
-            Icons.account_circle_rounded,
-            color: GlobalVariables.secondaryColor,
-          ),
-        )
-      ],
-    );
-  }
+        TextSpan(
+          text: 'Dükkanı',
+          style: TextStyle(color: GlobalVariables.primaryColor, fontSize: 22),
+        ),
+      ]),
+    ),
+    actions: [
+      Container(
+        padding: const EdgeInsets.all(5.0),
+        child: Stack(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(right: 5.0),
+              child: Align(
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.notifications,
+                    color: GlobalVariables.secondaryColor,
+                  )),
+            ),
+            Positioned(
+              top: 13,
+              right: 7,
+              child: Container(
+                width: 7,
+                height: 7,
+                decoration: const BoxDecoration(
+                  color: GlobalVariables.primaryColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+      const Padding(
+        padding: EdgeInsets.only(right: 5.0),
+        child: Icon(
+          Icons.account_circle_rounded,
+          color: GlobalVariables.secondaryColor,
+        ),
+      )
+    ],
+  );
+}
+
 
   BottomNavigationBar _bottomNavigationBar() {
     return BottomNavigationBar(
